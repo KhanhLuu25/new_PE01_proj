@@ -12,7 +12,7 @@ namespace PE01_proj.Shared.Domain
         public string CustName { get; set; }
         public string CustAddress { get;set;}
         public string CustEmail { get; set; }
-        public int CustContactNo { get; set;}
+        public string CustContactNo { get; set;}
         public virtual List<Orders> Orders { get; set; }
         public virtual List<Trade> Trades { get; set; }
         public virtual List<TradeDev> TradeDevs { get; set; }

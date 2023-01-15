@@ -14,7 +14,7 @@ namespace PE01_proj.Shared.Domain
         public int Orderquantity { get; set; }
         public int StaffID { get; set; }
         public virtual Staffs Staffs { get; set; }
-        public int CustomerID { get; set; }
+        public int CustID { get; set; }
         public virtual Customers Customers { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
         public virtual List<Payment> Payments { get; set; }
