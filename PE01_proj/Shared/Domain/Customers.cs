@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PE01_proj.Shared.Domain
 {
-    public class Customers
+    public class Customers : BaseDomainModel
     {
         public int CustID { get; set; }
         public string CustName { get; set; }

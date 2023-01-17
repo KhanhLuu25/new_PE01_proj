@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PE01_proj.Shared.Domain
 {
-    public class Payment
+    public class Payment : BaseDomainModel
     {
         public int PaymentID { get; set; }
         public string CardName { get; set; }

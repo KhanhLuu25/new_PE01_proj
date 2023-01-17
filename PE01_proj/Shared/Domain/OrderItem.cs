@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PE01_proj.Shared.Domain
 {
-    public class OrderItem
+    public class OrderItem : BaseDomainModel
     {
         public int OrderItemID { get; set; }
         public int OrderQty { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PE01_proj.Shared.Domain
 {
-    public class Devices
+    public class Devices : BaseDomainModel
     {
         public int DeviceID { get; set; }
         public string DevName { get; set; }
