@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PE01_proj.Server.Data;
+using PE01_proj.Server.IRepository;
 using PE01_proj.Server.Models;
+using PE01_proj.Server.Repository;
 using Syncfusion.Blazor;
 
 namespace PE01_proj.Server
@@ -41,6 +43,8 @@ namespace PE01_proj.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

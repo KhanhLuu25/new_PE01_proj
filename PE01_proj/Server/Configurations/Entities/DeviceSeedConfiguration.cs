@@ -8,13 +8,13 @@ using PE01_proj.Shared.Domain;
 
 namespace PE01_proj.Server.Configurations.Entities
 {
-    public class DeviceSeedConfiguration : IEntityTypeConfiguration<Devices>
+    public class DeviceSeedConfiguration : IEntityTypeConfiguration<Device>
     {
-        public void Configure(EntityTypeBuilder<Devices> builder)
+        public void Configure(EntityTypeBuilder<Device> builder)
         {
             var hasher = new PasswordHasher<ApplicationUser>();
             builder.HasData(
-            new Devices
+            new Device
             {
                 DeviceID =1,
                 DevName = "iPhone 13 Pro Max",
@@ -23,7 +23,7 @@ namespace PE01_proj.Server.Configurations.Entities
                 DevType = "Phone"
             
             },
-            new Devices
+            new Device
             {
                 DeviceID = 1,
                 DevName = "Samsung Galaxy Flip 4",

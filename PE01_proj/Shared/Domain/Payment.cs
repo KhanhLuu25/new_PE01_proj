@@ -12,7 +12,7 @@ namespace PE01_proj.Shared.Domain
         public string CardName { get; set; }
         public int CardNo { get; set; }
         public int OrderID { get; set; }
-        public virtual Orders Orders { get; set; }
+        public virtual Order Orders { get; set; }
 
     }
 }

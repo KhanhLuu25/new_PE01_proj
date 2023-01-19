@@ -12,8 +12,8 @@ namespace PE01_proj.Shared.Domain
         public DateTime TradeDateTime { get; set; }
         public int TotalTradeAmount { get; set; }
         public int StaffID { get; set; }
-        public virtual Staffs Staffs { get; set; }
+        public virtual Staff Staffs { get; set; }
         public int CustID { get; set; }
-        public virtual Customers Customers { get; set; }
+        public virtual Customer Customers { get; set; }
     }
 }

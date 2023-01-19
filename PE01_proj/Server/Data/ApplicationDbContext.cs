@@ -19,11 +19,11 @@ namespace PE01_proj.Server.Data
         {
 
         }
-        public DbSet<Customers> Customers { get; set; }
-        public DbSet<Staffs> Staffs { get; set; }
-        public DbSet<Orders> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Devices> Devices { get; set; }
+        public DbSet<Device> Devices { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Trade> Trades { get; set; }
         public DbSet<TradeDev> TradeDevs { get; set; }

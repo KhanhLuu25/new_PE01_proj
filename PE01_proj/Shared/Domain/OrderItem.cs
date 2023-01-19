@@ -11,10 +11,10 @@ namespace PE01_proj.Shared.Domain
         public int OrderItemID { get; set; }
         public int OrderQty { get; set; }
         public int OrderID { get; set; }
-        public virtual Orders Orders { get; set; }
+        public virtual Order Orders { get; set; }
 
         public int DeviceID { get; set; }
-        public virtual Devices Devices { get; set; }
+        public virtual Device Devices { get; set; }
        
     }
 }

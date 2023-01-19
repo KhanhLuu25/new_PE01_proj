@@ -12,9 +12,9 @@ namespace PE01_proj.Shared.Domain
         public string TradeDevType { get; set; }
         public int TradeDecPrice { get; set; }
         public int DeviceID { get; set; }
-        public virtual Devices Devices { get; set; }
+        public virtual Device Devices { get; set; }
         public int CustID {get;set;}
-        public virtual Customers Customers { get; set; }
+        public virtual Customer Customers { get; set; }
 
 
     }
