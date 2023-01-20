@@ -1,0 +1,69 @@
+﻿@page "/customers/"
+@using PE01_proj.Shared.Domain;
+
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@using PE01_proj.Client.Static
+
+@if (Customers == null)
+{
+    <div class=" alert alert-info">Loading Customers...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Cost</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var customer in Customers)
+            {
+                <tr>
+                    <td>@customer.CustName</td>
+                    <td>
+                        <a href="/customers/view/@customer.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/customers/edit/@customer.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(customer.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    private List<Customer> Customers;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+    async Task Delete(int customerId)
+    {
+        var customer = Customers.First(q => q.Id == customerId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.CustName}");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
+            await OnInitializedAsync();
+
+        }
+    }
+
+}

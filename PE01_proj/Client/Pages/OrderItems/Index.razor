@@ -1,0 +1,69 @@
+﻿@page "/orderItem/"
+@using PE01_proj.Shared.Domain;
+
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@using PE01_proj.Client.Static
+
+@if (Orders == null)
+{
+    <div class=" alert alert-info">Loading Orders...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Cost</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var order in Orders)
+            {
+                <tr>
+                    <td>@order. OrderID</td>
+                    <td>
+                        <a href="/orders/view/@order.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/orders/edit/@order.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(order.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+
+                       
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code{
+    private List<Order> Orders;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+    }
+    async Task Delete(int orderId)
+    {
+        var order = Orders.First(q => q.Id == orderId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.OrderID}");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
+            await OnInitializedAsync();
+
+        }
+    }
+	
+}

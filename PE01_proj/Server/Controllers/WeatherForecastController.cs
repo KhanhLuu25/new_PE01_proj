@@ -9,7 +9,7 @@ using PE01_proj.Shared;
 
 namespace PE01_proj.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PE01_proj.Server.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using PE01_proj.Server.Data;
 using PE01_proj.Shared.Domain;
@@ -14,53 +16,55 @@ namespace PE01_proj.Server.Controllers
     [ApiController]
     public class TradeDevsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TradeDevsController(ApplicationDbContext context)
+        public TradeDevsController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/TradeDevs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TradeDev>>> GetTradeDevs()
+        public async Task<ActionResult> GetTradeDevs()
         {
-            return await _context.TradeDevs.ToListAsync();
+            var tradeDevs = await _unitOfWork.TradeDevs.GetAll();
+            return Ok(tradeDevs);
         }
 
         // GET: api/TradeDevs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TradeDev>> GetTradeDev(int id)
+        public async Task<ActionResult> GetTradeDevs(int id)
         {
-            var tradeDev = await _context.TradeDevs.FindAsync(id);
+            /*ContinueStatementSyntax from here*/
+            var tradeDevs = await _unitOfWork.TradeDevs.Get(q => q.Id == id);
 
-            if (tradeDev == null)
+            if (tradeDevs == null)
             {
                 return NotFound();
             }
 
-            return tradeDev;
+            return Ok(tradeDevs);
         }
 
         // PUT: api/TradeDevs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTradeDev(int id, TradeDev tradeDev)
+        public async Task<IActionResult> PutTradeDevs(int id, TradeDev tradeDev)
         {
             if (id != tradeDev.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(tradeDev).State = EntityState.Modified;
+            _unitOfWork.TradeDevs.Update(tradeDev);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TradeDevExists(id))
+                if (!await TradeDevsExists(id))
                 {
                     return NotFound();
                 }
@@ -76,33 +80,34 @@ namespace PE01_proj.Server.Controllers
         // POST: api/TradeDevs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TradeDev>> PostTradeDev(TradeDev tradeDev)
+        public async Task<ActionResult<TradeDev>> PostTradeDevs(TradeDev tradeDevs)
         {
-            _context.TradeDevs.Add(tradeDev);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.TradeDevs.Insert(tradeDevs);
+            await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetTradeDev", new { id = tradeDev.Id }, tradeDev);
+            return CreatedAtAction("GetTradeDevs", new { id = tradeDevs.Id }, tradeDevs);
         }
 
         // DELETE: api/TradeDevs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTradeDev(int id)
+        public async Task<IActionResult> DeleteTradeDevs(int id)
         {
-            var tradeDev = await _context.TradeDevs.FindAsync(id);
-            if (tradeDev == null)
+            var tradeDevs = await _unitOfWork.TradeDevs.Get(q => q.Id == id);
+            if (tradeDevs == null)
             {
                 return NotFound();
             }
 
-            _context.TradeDevs.Remove(tradeDev);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.TradeDevs.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private bool TradeDevExists(int id)
+        private async Task<bool> TradeDevsExists(int id)
         {
-            return _context.TradeDevs.Any(e => e.Id == id);
+            var tradeDevs = await _unitOfWork.TradeDevs.Get(q => q.Id == id);
+            return tradeDevs != null;
         }
     }
 }

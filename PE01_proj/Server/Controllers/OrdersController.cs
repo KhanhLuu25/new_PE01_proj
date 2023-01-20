@@ -27,7 +27,7 @@ namespace PE01_proj.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetOrders()
         {
-            var orders = await _unitOfWork.Orders.GetAll();
+            var orders = await _unitOfWork.Orders.GetAll(includes: q => q.Include(x => x.Customers).Include(x => x.Staffs));
             return Ok(orders);
         }
 
@@ -36,6 +36,7 @@ namespace PE01_proj.Server.Controllers
         public async Task<ActionResult> GetOrders(int id)
         {
             /*ContinueStatementSyntax from here*/
+            
             var orders = await _unitOfWork.Orders.Get(q => q.Id == id);
 
             if (orders == null)

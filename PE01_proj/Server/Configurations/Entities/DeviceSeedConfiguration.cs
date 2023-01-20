@@ -12,24 +12,32 @@ namespace PE01_proj.Server.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<Device> builder)
         {
-            var hasher = new PasswordHasher<ApplicationUser>();
+           
             builder.HasData(
             new Device
             {
-                DeviceID =1,
+                Id =1,
                 DevName = "iPhone 13 Pro Max",
                 DevDesc= "256GB",
                 DevCost = "$1688",
-                DevType = "Phone"
-            
+                DevType = "Phone",
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                CreatedBy = "System",
+                UpdatedBy = "System"
+
             },
             new Device
             {
-                DeviceID = 1,
+                Id = 2,
                 DevName = "Samsung Galaxy Flip 4",
                 DevDesc = "512GB",
                 DevCost = "$1255",
-                DevType = "Phone"
+                DevType = "Phone",
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                CreatedBy = "System",
+                UpdatedBy = "System"
 
             }
 

@@ -6,6 +6,7 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using PE01_proj.Server.Configurations.Entities;
 using PE01_proj.Server.Models;
 using PE01_proj.Shared.Domain;
 
@@ -28,6 +29,11 @@ namespace PE01_proj.Server.Data
         public DbSet<Trade> Trades { get; set; }
         public DbSet<TradeDev> TradeDevs { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new DeviceSeedConfiguration());
+          
+        }
     }
 }
