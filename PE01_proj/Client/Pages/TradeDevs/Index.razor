@@ -1,5 +1,63 @@
-﻿<h3>Index</h3>
+﻿@page "/tradeDevs/"
+@using PE01_proj.Shared.Domain;
 
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@using PE01_proj.Client.Static
+
+@if (TradeDevs == null)
+{
+    <div class=" alert alert-info">Loading TradeDevs...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Trade ID</th>
+                <th>Trade Type</th>
+                <th>Trade Price</th>
+                <th>Device Name</th>
+                <th>Customer Name</th>
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var tradeDev in TradeDevs)
+            {
+                <tr>
+                    <td>@tradeDev.TradeDevID</td>
+                    <td>@tradeDev.TradeDevType</td>
+                    <td>@tradeDev.TradeDecPrice</td>
+                    <td>@tradeDev.Devices.DevName</td>
+                    <td>@tradeDev.Customers.CustName</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 @code {
+    private List<TradeDev> TradeDevs;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        TradeDevs = await _client.GetFromJsonAsync<List<TradeDev>>($"{Endpoints.TradeDevsEndpoint}");
+    }
+    async Task Delete(int tradeDevId)
+    {
+        var tradeDev = TradeDevs.First(q => q.Id == tradeDevId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {tradeDev.TradeDevType}");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.TradeDevsEndpoint}/{tradeDevId}");
+            await OnInitializedAsync();
+
+        }
+    }
 
 }

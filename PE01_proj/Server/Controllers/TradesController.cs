@@ -27,7 +27,8 @@ namespace PE01_proj.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetTrades()
         {
-            var trades = await _unitOfWork.Trades.GetAll();
+            var trades = await _unitOfWork.Trades.GetAll(includes: q => q.Include(x =>
+x.Staffs).Include(x => x.Customers));
             return Ok(trades);
         }
 

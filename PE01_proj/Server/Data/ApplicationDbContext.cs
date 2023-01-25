@@ -33,7 +33,9 @@ namespace PE01_proj.Server.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new DeviceSeedConfiguration());
-          
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
+            builder.ApplyConfiguration(new CustomerSeedConfiguration());
+
         }
     }
 }

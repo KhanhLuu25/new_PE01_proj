@@ -27,7 +27,8 @@ namespace PE01_proj.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetOrderItems()
         {
-            var orderItems = await _unitOfWork.OrderItems.GetAll();
+            var orderItems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x =>
+x.Orders).Include(x => x.Devices));
             return Ok(orderItems);
         }
 

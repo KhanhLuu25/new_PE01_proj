@@ -89,6 +89,7 @@ namespace PE01_proj.Server.Data.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "DevCost", "DevDesc", "DevName", "DevType", "DeviceID", "UpdatedBy" },
                 values: new object[] { 2, "System", new DateTime(2023, 1, 20, 11, 15, 19, 853, DateTimeKind.Local).AddTicks(6532), new DateTime(2023, 1, 20, 11, 15, 19, 853, DateTimeKind.Local).AddTicks(6543), "$1255", "512GB", "Samsung Galaxy Flip 4", "Phone", 0, "System" });
 
+          
             migrationBuilder.CreateIndex(
                 name: "IX_Trades_StaffID",
                 table: "Trades",

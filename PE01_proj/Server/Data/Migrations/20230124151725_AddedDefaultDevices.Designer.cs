@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PE01_proj.Server.Data;
 
 namespace PE01_proj.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230124151725_AddedDefaultDevices")]
+    partial class AddedDefaultDevices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,34 +367,6 @@ namespace PE01_proj.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            CustAddress = "Blk 91 Ang Mo Kio Ave 3",
-                            CustContactNo = "98765788",
-                            CustEmail = "jeromeyufei54@gmail.com",
-                            CustID = 0,
-                            CustName = "Jerome Ng ",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 526, DateTimeKind.Local).AddTicks(260),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 526, DateTimeKind.Local).AddTicks(296),
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            CustAddress = "Blk 92 Potong Pasir Ave 1",
-                            CustContactNo = "98997654",
-                            CustEmail = "jescrenachan77@yahoo.com",
-                            CustID = 0,
-                            CustName = "Jescrena Chan Yu Ying ",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 526, DateTimeKind.Local).AddTicks(307),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 526, DateTimeKind.Local).AddTicks(310),
-                            UpdatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("PE01_proj.Shared.Domain.Device", b =>
@@ -438,8 +412,8 @@ namespace PE01_proj.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 477, DateTimeKind.Local).AddTicks(4511),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 520, DateTimeKind.Local).AddTicks(8192),
+                            DateCreated = new DateTime(2023, 1, 24, 23, 17, 22, 826, DateTimeKind.Local).AddTicks(848),
+                            DateUpdated = new DateTime(2023, 1, 24, 23, 17, 22, 829, DateTimeKind.Local).AddTicks(1286),
                             DevCost = "$1688",
                             DevDesc = "256GB",
                             DevName = "iPhone 13 Pro Max",
@@ -451,8 +425,8 @@ namespace PE01_proj.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 521, DateTimeKind.Local).AddTicks(1972),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 521, DateTimeKind.Local).AddTicks(2018),
+                            DateCreated = new DateTime(2023, 1, 24, 23, 17, 22, 829, DateTimeKind.Local).AddTicks(3394),
+                            DateUpdated = new DateTime(2023, 1, 24, 23, 17, 22, 829, DateTimeKind.Local).AddTicks(3408),
                             DevCost = "$1255",
                             DevDesc = "512GB",
                             DevName = "Samsung Galaxy Flip 4",
@@ -629,8 +603,8 @@ namespace PE01_proj.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 525, DateTimeKind.Local).AddTicks(940),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 525, DateTimeKind.Local).AddTicks(993),
+                            DateCreated = new DateTime(2023, 1, 24, 23, 17, 22, 832, DateTimeKind.Local).AddTicks(5827),
+                            DateUpdated = new DateTime(2023, 1, 24, 23, 17, 22, 832, DateTimeKind.Local).AddTicks(5864),
                             StaffAddress = "Blk 53 Marsiling Road",
                             StaffID = 0,
                             StaffName = "John Tan",
@@ -641,8 +615,8 @@ namespace PE01_proj.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 24, 23, 40, 59, 525, DateTimeKind.Local).AddTicks(1002),
-                            DateUpdated = new DateTime(2023, 1, 24, 23, 40, 59, 525, DateTimeKind.Local).AddTicks(1005),
+                            DateCreated = new DateTime(2023, 1, 24, 23, 17, 22, 832, DateTimeKind.Local).AddTicks(5873),
+                            DateUpdated = new DateTime(2023, 1, 24, 23, 17, 22, 832, DateTimeKind.Local).AddTicks(5876),
                             StaffAddress = "Blk 143 Bedok North",
                             StaffID = 0,
                             StaffName = "Mei Yan",

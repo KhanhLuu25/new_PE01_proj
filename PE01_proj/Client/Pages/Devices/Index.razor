@@ -6,6 +6,13 @@
 @attribute [Authorize]
 @using PE01_proj.Client.Static
 
+
+<a href="/devices/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Device
+</a>
+<br />
+<br />
 @if (Devices == null)
 {
     <div class=" alert alert-info">Loading Devices...</div>

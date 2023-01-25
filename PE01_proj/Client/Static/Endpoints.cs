@@ -13,7 +13,7 @@ namespace PE01_proj.Client.Static
         public static readonly string CustomersEndpoint = $"{Prefix}/customers";
         public static readonly string OrderItemsEndpoint = $"{Prefix}/orderitems";
         public static readonly string OrdersEndpoint = $"{Prefix}/orders";
-        public static readonly string PaynentsEndpoint = $"{Prefix}/payments";
+        public static readonly string PaymentsEndpoint = $"{Prefix}/payments";
         public static readonly string StaffsEndpoint = $"{Prefix}/staffs";
         public static readonly string TradesEndpoint = $"{Prefix}/trades";
         public static readonly string TradeDevsEndpoint = $"{Prefix}/tradeDevs";

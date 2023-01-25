@@ -1,4 +1,4 @@
-﻿@page "/orderItem/"
+﻿@page "/orderItems/"
 @using PE01_proj.Shared.Domain;
 
 @inject HttpClient _client
@@ -6,61 +6,52 @@
 @attribute [Authorize]
 @using PE01_proj.Client.Static
 
-@if (Orders == null)
+@if (OrderItems == null)
 {
-    <div class=" alert alert-info">Loading Orders...</div>
+    <div class=" alert alert-info">Loading OrderItems...</div>
 }
 else
 {
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Cost</th>
+                <th>Device Name</th>
+                <th>Devcie Type</th>
+                <th>Order DateTime</th>
+                <th>Order Quantity</th>
+              
             </tr>
 
         </thead>
         <tbody>
-            @foreach (var order in Orders)
+            @foreach (var orderItem in OrderItems)
             {
                 <tr>
-                    <td>@order. OrderID</td>
-                    <td>
-                        <a href="/orders/view/@order.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/orders/edit/@order.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(order.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-
-                       
-                        
-                    </td>
+                    <td>@orderItem.Devices.DevName</td>
+                    <td>@orderItem.Devices.DevType</td>
+                    <td>@orderItem.Orders.OrdDateTime</td>
+                    <td>@orderItem.OrderQty</td>
+                   
                 </tr>
             }
         </tbody>
     </table>
 }
 @code{
-    private List<Order> Orders;
+    private List<OrderItem> OrderItems;
 
 
     protected async override Task OnInitializedAsync()
     {
-        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
     }
-    async Task Delete(int orderId)
+    async Task Delete(int orderItemId)
     {
-        var order = Orders.First(q => q.Id == orderId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.OrderID}");
+        var orderItem = OrderItems.First(q => q.Id == orderItemId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {orderItem.OrderQty}");
         if (confirm)
         {
-            await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
+            await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderItemId}");
             await OnInitializedAsync();
 
         }

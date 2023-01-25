@@ -27,7 +27,7 @@ namespace PE01_proj.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetPayments()
         {
-            var payments = await _unitOfWork.Payments.GetAll();
+            var payments = await _unitOfWork.Payments.GetAll(includes: q => q.Include(x => x.Orders));
             return Ok(payments);
         }
 

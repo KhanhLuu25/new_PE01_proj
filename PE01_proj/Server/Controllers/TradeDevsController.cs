@@ -27,7 +27,8 @@ namespace PE01_proj.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetTradeDevs()
         {
-            var tradeDevs = await _unitOfWork.TradeDevs.GetAll();
+            var tradeDevs = await _unitOfWork.TradeDevs.GetAll(includes: q => q.Include(x =>
+x.Devices).Include(x => x.Customers));
             return Ok(tradeDevs);
         }
 

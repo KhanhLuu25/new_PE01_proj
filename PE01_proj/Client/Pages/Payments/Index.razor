@@ -1,5 +1,59 @@
-﻿<h3>Index</h3>
+﻿@page "/payments/"
+@using PE01_proj.Shared.Domain;
 
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@using PE01_proj.Client.Static
+
+@if (Payments == null)
+{
+    <div class=" alert alert-info">Loading Payments...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Card Name</th>
+                <th>Card Number</th>
+                <th>Total Pric</th>
+                
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var payment in Payments)
+            {
+                <tr>
+                    <td>@payment.CardName</td>
+                    <td>@payment.CardNo</td>
+
+                    <td>@payment.Orders.TotalPrice</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 @code {
+    private List<Payment> Payments;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}");
+    }
+    async Task Delete(int paymentId)
+    {
+        var payment = Payments.First(q => q.Id == paymentId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {payment.CardName}");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.PaymentsEndpoint}/{paymentId}");
+            await OnInitializedAsync();
+
+        }
+    }
 
 }
