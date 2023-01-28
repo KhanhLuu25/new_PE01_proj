@@ -6,6 +6,12 @@
 @attribute [Authorize]
 @using PE01_proj.Client.Static
 
+<a href="/customers/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Customer
+</a>
+<br />
+<br />
 @if (Customers == null)
 {
     <div class=" alert alert-info">Loading Customers...</div>
