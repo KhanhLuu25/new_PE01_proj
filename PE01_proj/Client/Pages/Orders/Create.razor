@@ -1,0 +1,98 @@
+﻿@page "/orders/create/"
+@using PE01_proj.Client.Static
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3 class="card-title">Create New Order</h3>
+<hr />
+<br />
+
+<EditForm Model="@order" OnValidSubmit="CreateOrder">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Staff</label>
+        <div>
+            <InputSelect @bind-Value="order.StaffID" class="form-control">
+                <option value="">-- Select Staff --</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.Id">@order.StaffID </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => order.StaffID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer: </label>
+        <div>
+            <InputSelect @bind-Value="order.CustID" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.CustName </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => order.CustID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>DateTime: </label>
+        <div>
+            <InputDate @bind-Value="@order.OrdDateTime" class="form-control" />
+            <ValidationMessage For="@(() => order.OrdDateTime)" />
+        </div>
+    </div>
+
+     <div class="form-group">
+        <label>DateTime: </label>
+        <div>
+            <InputNumber @bind-Value="@order.TotalPrice" class="form-control" />
+            <ValidationMessage For="@(() => order.TotalPrice)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>DateTime: </label>
+        <div>
+            <InputNumber @bind-Value="@order.Orderquantity" class="form-control" />
+            <ValidationMessage For="@(() => order.Orderquantity)" />
+        </div>
+    </div>
+
+  
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Order
+    </button>
+    
+</EditForm>
+
+@code {
+    Order order = new Order();
+
+    private IList<Staff> Staffs;
+    private IList<Customer> Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        //order.DateOut = DateTime.Now;
+    }
+
+    private async Task CreateOrder()
+    {
+        await _client.PostAsJsonAsync(Endpoints.OrdersEndpoint, order);
+        _navManager.NavigateTo("/orders/");
+    }
+}
