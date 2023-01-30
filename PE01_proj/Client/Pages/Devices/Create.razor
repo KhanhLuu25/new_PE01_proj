@@ -12,7 +12,7 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-  
+
     <div class="form-group">
         <label>Device Desciption: </label>
         <div>
@@ -50,163 +50,12 @@
     </button>
 </EditForm>
 
-age "/devices/create/"
-
-@inject HttpClient _client
-
-@inject NavigationManager _navManager
-
-
-
-<h3 class="card-title">Create New Devices</h3>
-
-<hr />
-
-<br />
-
-
-
-<EditForm Model="@device" OnValidSubmit="Createdevice">
-
-    <DataAnnotationsValidator />
-
-    <ValidationSummary />
-
-
-
-    <div class="form-group">
-
-        <label>Make: </label>
-
-        <div>
-
-            <InputSelect @bind-Value="device.MakeId" class="form-control">
-
-                <option value="">-- Select Make --</option>
-
-                @if (Makes != null)
-
-                {
-
-                    foreach (var make in Makes)
-
-                    {
-
-                        <option value="@make.Id">@make.Name</option>
-
-                    }
-
-                }
-
-            </InputSelect>
-
-            <ValidationMessage For="@(() => device.MakeId)" />
-
-        </div>
-
-    </div>
-
-
-
-    <div class="form-group">
-
-        <label>Model: </label>
-
-        <div>
-
-            <InputSelect @bind-Value="device.Model.Name" class="form-control">
-
-                <option value="">-- Select Model --</option>
-
-                @if (Models != null)
-
-                {
-
-                    foreach (var model in Models)
-
-                    {
-
-                        <option value="@model.Id">@model.Name</option>
-
-                    }
-
-                }
-
-            </InputSelect>
-
-            <ValidationMessage For="@(() => device.Model.Name)" />
-
-        </div>
-
-    </div>
-
-
-
-    <div class="form-group">
-
-        <label>Year: </label>
-
-        <div>
-
-            <InputNumber @bind-Value="@device.Year" class="form-control" />
-
-            <ValidationMessage For="@(() => device.Year)" />
-
-        </div>
-
-    </div>
-
-
-
-
-
-    <button type="submit" class="btn btn-success btn-block">
-
-        Create device
-
-    </button>
-
-</EditForm>
-
-
-
 @code {
     Device device = new Device();
 
-    device device = new device();
-
-
-
-    private IList<Make> Makes;
-
-    private IList<Model> Models;
-
-    private IList<Colour> Colours;
-
-
-
-    protected async override Task OnInitializedAsync()
-
+    private async Task CreateDevice()
     {
-
-        Makes = await _client.GetFromJsonAsync<List<Make>>($"{Endpoints.MakesEndpoint}");
-
-        Models = await _client.GetFromJsonAsync<List<Model>>($"{Endpoints.ModelsEndpoint}");
-
-        Colours = await _client.GetFromJsonAsync<List<Colour>>($"{Endpoints.ColoursEndpoint}");
-
-    }
-
-
-
-    private async Task Createdevice()
-
-    {
-
-        await _client.PostAsJsonAsync(Endpoints.devicesEndpoint, device);
-
+        await _client.PostAsJsonAsync(Endpoints.DevicesEndpoint, device);
         _navManager.NavigateTo("/devices/");
-
     }
-
 }

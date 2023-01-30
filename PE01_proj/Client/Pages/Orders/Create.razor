@@ -20,7 +20,7 @@
                 {
                     foreach (var staff in Staffs)
                     {
-                        <option value="@staff.Id">@order.StaffID </option>
+                        <option value="@staff.Id">@staff.StaffName </option>
                     }
                 }
             </InputSelect>
@@ -53,8 +53,8 @@
         </div>
     </div>
 
-    @* <div class="form-group">
-        <label>DateTime: </label>
+ @*    <div class="form-group">
+        <label>Total Price: </label>
         <div>
             <InputNumber @bind-Value="@order.TotalPrice" class="form-control" />
             <ValidationMessage For="@(() => order.TotalPrice)" />
@@ -62,13 +62,13 @@
     </div>
 
     <div class="form-group">
-        <label>DateTime: </label>
+        <label>Quantity: </label>
         <div>
             <InputNumber @bind-Value="@order.Orderquantity" class="form-control" />
             <ValidationMessage For="@(() => order.Orderquantity)" />
         </div>
-    </div>*@
-
+    </div>
+*@
   
 
     <button type="submit" class="btn btn-success btn-block">
