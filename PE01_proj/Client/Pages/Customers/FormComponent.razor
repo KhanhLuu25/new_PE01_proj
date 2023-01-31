@@ -1,0 +1,54 @@
+﻿@using PE01_proj.Client.Static;
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Customer</h3>
+<EditForm Model="@customer" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.CustName" class="form-control" />
+            <ValidationMessage For="@(() => customer.CustName)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Cost: </label>
+        <div>
+            <InputText @bind-Value="@customer.CustAddress" class="form-control" />
+            <ValidationMessage For="@(() => customer.CustAddress)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Email: </label>
+        <div>
+            <InputText @bind-Value="@customer.CustEmail" class="form-control" />
+            <ValidationMessage For="@(() => customer.CustEmail)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Conatct Number: </label>
+        <div>
+            <InputText @bind-Value="@customer.CustContactNo" class="form-control" />
+            <ValidationMessage For="@(() => customer.CustContactNo)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+</EditForm>
+@code {
+    [Parameter] public Customer customer { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
+

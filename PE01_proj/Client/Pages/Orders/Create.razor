@@ -53,28 +53,28 @@
         </div>
     </div>
 
- @*    <div class="form-group">
-        <label>Total Price: </label>
-        <div>
-            <InputNumber @bind-Value="@order.TotalPrice" class="form-control" />
-            <ValidationMessage For="@(() => order.TotalPrice)" />
-        </div>
+    @* <div class="form-group">
+    <label>Total Price: </label>
+    <div>
+    <InputNumber @bind-Value="@order.TotalPrice" class="form-control" />
+    <ValidationMessage For="@(() => order.TotalPrice)" />
+    </div>
     </div>
 
     <div class="form-group">
-        <label>Quantity: </label>
-        <div>
-            <InputNumber @bind-Value="@order.Orderquantity" class="form-control" />
-            <ValidationMessage For="@(() => order.Orderquantity)" />
-        </div>
+    <label>Quantity: </label>
+    <div>
+    <InputNumber @bind-Value="@order.Orderquantity" class="form-control" />
+    <ValidationMessage For="@(() => order.Orderquantity)" />
     </div>
-*@
-  
+    </div>
+    *@
+
 
     <button type="submit" class="btn btn-success btn-block">
         Create Order
     </button>
-    
+
 </EditForm>
 
 @code {
