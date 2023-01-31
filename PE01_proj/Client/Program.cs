@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BlazorStrap;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +28,6 @@ namespace PE01_proj.Client
 
             builder.Services.AddApiAuthorization();
 
-            builder.Services.AddBlazorStrap();
 
             await builder.Build().RunAsync();
         }
