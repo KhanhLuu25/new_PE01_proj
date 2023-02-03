@@ -20,28 +20,23 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <td>ID</td>
-                <th>Customer</th>
-                @*<th>DateTime</th>*@
-                @*<th>Total Price</th>
-                <th>Order Quantity</th>*@
                 <th>Staff</th>
-                <th>DateTime</th>
+                @*<th>DateTime</th>*@
+                <th>Order Quantity</th>
+                <th>Datetime</th>
+                <th>Total Price</th>
+                <th>Actions</th>
             </tr>
 
         </thead>
-      
         <tbody>
             @foreach (var order in Orders)
             {
                 <tr>
-                    <td>@order.Id</td>
-                    <td>@order.Customers.CustName</td>
-                    @*<td>@order.OrdDateTime.Date.ToString("dd MMMM yyyy")</td>*@
-                    @*<td>@order.TotalPrice</td>
-                    <td>@order.Orderquantity</td>*@
                     <td>@order.Staffs.StaffName</td>
+                    <td>@order.Orderquantity</td>
                     <td>@order.OrdDateTime.Date.ToString("dd MMMM yyyy")</td>
+                    <td>@order.TotalPrice</td>
                     <td>
                         <a href="/orders/view/@order.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -56,6 +51,7 @@ else
                 </tr>
             }
         </tbody>
+        
     </table>
 }
 @code{
@@ -70,7 +66,7 @@ else
     async Task Delete(int orderId)
     {
         var order = Orders.First(q => q.Id == orderId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.OrderID}");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.Orderquantity}");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderId}");
