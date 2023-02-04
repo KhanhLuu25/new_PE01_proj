@@ -1,0 +1,25 @@
+﻿@page "/trades/edit/{id:int}"
+@using PE01_proj.Client.Static;
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditTrade" trade="trade" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Trade trade = new Trade();
+    protected async override Task OnParametersSetAsync()
+    {
+        trade = await
+       _client.GetFromJsonAsync<Trade>($"{Endpoints.TradesEndpoint}/{id}");
+    }
+    async Task EditTrade()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.TradesEndpoint}/{id}",
+       trade);
+        _navManager.NavigateTo("/trades/");
+    }
+}

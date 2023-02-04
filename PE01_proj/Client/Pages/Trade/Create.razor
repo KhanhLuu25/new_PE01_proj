@@ -1,0 +1,90 @@
+﻿@page "/trades/create/"
+@using PE01_proj.Client.Static
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3 class="card-title">Create New Trade</h3>
+<hr />
+<br />
+
+<EditForm Model="@trade" OnValidSubmit="CreateTrade">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Staff</label>
+        <div>
+            <InputSelect @bind-Value="trade.StaffID" class="form-control">
+                <option value="">-- Select Staff --</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.Id">@staff.StaffName </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => trade.StaffID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer: </label>
+        <div>
+            <InputSelect @bind-Value="trade.CustID" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.CustName </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => trade.CustID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>DateTime: </label>
+        <div>
+            <InputDate @bind-Value="@trade.TradeDateTime" class="form-control" />
+            <ValidationMessage For="@(() => trade.TradeDateTime)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Total Price: </label>
+        <div>
+            <InputNumber @bind-Value="@trade.TotalTradeAmount" class="form-control" />
+            <ValidationMessage For="@(() => trade.TotalTradeAmount)" />
+        </div>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Trade
+    </button>
+
+</EditForm>
+
+@code {
+    Trade trade = new Trade();
+
+    private IList<Staff> Staffs;
+    private IList<Customer> Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        //trade.DateOut = DateTime.Now;
+    }
+
+    private async Task CreateTrade()
+    {
+        await _client.PostAsJsonAsync(Endpoints.TradesEndpoint, trade);
+        _navManager.NavigateTo("/trades/");
+    }
+}

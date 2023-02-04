@@ -5,7 +5,10 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @using PE01_proj.Client.Static
-
+<a href="/trades/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Creating New Trade
+</a>
 @if (Trades == null)
 {
     <div class=" alert alert-info">Loading Trades...</div>
@@ -15,11 +18,10 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Trade ID</th>
-                <th>Trade DateTime</th>t
+                <th>Trade DateTime</th>
                 <th>Total Trade Amount</th>
                 <th>Staff Name</th>
-                <th>Customer Name</th>
+                <th>Action</th>
             </tr>
 
         </thead>
@@ -27,12 +29,22 @@ else
             @foreach (var trade in Trades)
             {
                 <tr>
-                    <td>@trade.TradeID</td>
-                    <td>@trade.TradeDateTime.ToString()</td>
+                    
+                    <td>@trade.TradeDateTime.Date.ToString("dd MMMM yyyy")</td>
                     <td>@trade.TotalTradeAmount</td>
                     <td>@trade.Staffs.StaffName</td>
-                    <td>@trade.Customers.CustName</td>
-                    
+                    @*<td>@trade.Customers.CustName</td>*@
+                    <td>
+                        <a href="/trades/view/@trade.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/trades/edit/@trade.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(trade.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
 
                    
                 </tr>

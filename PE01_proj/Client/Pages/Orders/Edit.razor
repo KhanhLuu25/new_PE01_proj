@@ -1,0 +1,25 @@
+﻿@page  "/orders/edit/{id:int}"
+@using PE01_proj.Client.Static;
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditOrder" order="order" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Order order = new Order();
+    protected async override Task OnParametersSetAsync()
+    {
+        order = await
+       _client.GetFromJsonAsync<Order>($"{Endpoints.OrdersEndpoint}/{id}");
+    }
+    async Task EditOrder()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/{id}",
+       order);
+        _navManager.NavigateTo("/orders/");
+    }
+}

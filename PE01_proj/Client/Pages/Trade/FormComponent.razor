@@ -1,0 +1,83 @@
+﻿@using PE01_proj.Client.Static;
+@using PE01_proj.Shared.Domain;
+@inject HttpClient _client
+
+<EditForm Model="@trade" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label>Staff</label>
+        <div>
+            <InputSelect @bind-Value="trade.StaffID" class="form-control">
+                <option value="">-- Select Staff --</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.Id">@staff.StaffName </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => trade.StaffID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer: </label>
+        <div>
+            <InputSelect @bind-Value="trade.CustID" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.CustName </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => trade.CustID)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>DateTime: </label>
+        <div>
+            <InputDate @bind-Value="@trade.TradeDateTime" class="form-control" />
+            <ValidationMessage For="@(() => trade.TradeDateTime)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Total Price: </label>
+        <div>
+            <InputNumber @bind-Value="@trade.TotalTradeAmount" class="form-control" />
+            <ValidationMessage For="@(() => trade.TotalTradeAmount)" />
+        </div>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Trade
+    </button>
+
+
+
+
+</EditForm>
+
+@code {
+    [Parameter] public Trade trade { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Customer> Customers;
+    private IList<Staff> Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+}
